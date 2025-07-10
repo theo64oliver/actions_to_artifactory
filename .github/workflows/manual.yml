@@ -43,4 +43,4 @@ jobs:
           # Add build status
           # jf rt bpr test-build1 43 test2 --aggregationStatus RELEASED
           # Publish build info
-          jf rt bp 
+          jf rt bp test-build1 43 hello im trying
