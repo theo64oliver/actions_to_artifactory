@@ -1,4 +1,4 @@
-name: "Setup JFrog CLI Example"
+name: "Upload artifact"
 on:
   push
   
@@ -29,5 +29,7 @@ jobs:
           jf rt bce
           # Collect VCS details from git and add them to the build
           jf rt bag
+          # Upload files
+          jf rt upload "test1/*" test1-output --build-name=test-build1 --build-number=42
           # Publish build info
           jf rt bp
