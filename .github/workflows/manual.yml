@@ -32,6 +32,6 @@ jobs:
           # Upload files
           jf rt upload "test1/*" test1-output --build-name=test-build1 --build-number=42
           # Test scan?
-          jf scan ./
+          jf build-scan ./
           # Publish build info
           jf rt bp
