@@ -41,6 +41,6 @@ jobs:
           # Add dependencies
           jf rt bad test-build1 43 "libA.a"
           # Add build status
-          jf rt build-add-status test-build1 43 success --comment="Sample release July 10"
+          jf rt bpr test-build1 43 test2 --aggregationStatus RELEASED
           # Publish build info
           jf rt bp test-build1 43
