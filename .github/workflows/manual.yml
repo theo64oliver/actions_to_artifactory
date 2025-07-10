@@ -23,6 +23,7 @@ jobs:
 
       - name: Publish docker image to registry
         run: |
+          docker login -uadmin trial04tq7y.jfrog.io -p ${{secrets.DOCKER_TOKEN}}
           docker build -t trial04tq7y.jfrog.io/docker-trial/test-image:1.0 .
           docker push trial04tq7y.jfrog.io/docker-trial/test-image:1.0
 
@@ -36,9 +37,11 @@ jobs:
           jf rt bag
           # Upload files
           jf rt upload "test1/*" test1-output --build-name=test-build1 --build-number=42
+          # Add dependencies
+          jf rt bad test-build1 42 "mylibA.a"
           # Test evidence on artifact
-          jf evd create --subject-repo-path test1-output/test1/file1.txt \
-                        --key "${{ secrets.PRIVATE_KEY }}" \
-                        --predicate ./sign.json --predicate-type https://jfrog.com/evidence/signature/v1
+          #jf evd create --subject-repo-path test1-output/test1/file1.txt \
+          #              --key "${{ secrets.PRIVATE_KEY }}" \
+          #              --predicate ./sign.json --predicate-type https://jfrog.com/evidence/signature/v1
           # Publish build info
           jf rt bp
