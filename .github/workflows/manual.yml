@@ -40,4 +40,4 @@ jobs:
           # Add dependencies
           jf rt bad test-build1 42 "libA.a"
           # Publish build info
-          jf rt bp
+          jf rt bp test-build1 42
