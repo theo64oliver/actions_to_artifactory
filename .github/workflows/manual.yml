@@ -40,5 +40,7 @@ jobs:
           jf rt upload "libA.a" test1-output
           # Add dependencies
           jf rt bad test-build1 43 "libA.a"
+          # Promote build
+          jf rt bpr test-build1 43 test2
           # Publish build info
           jf rt bp test-build1 43
