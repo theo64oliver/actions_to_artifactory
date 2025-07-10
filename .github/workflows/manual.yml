@@ -21,6 +21,11 @@ jobs:
           # JF_USER: ${{ secrets.JF_USER }}
           # JF_PASSWORD: ${{ secrets.JF_PASSWORD }}
 
+      - name: Publish docker image to registry
+        run: |
+          docker build -t trial04tq7y.jfrog.io/docker-trial/test-image:1.0 .
+          docker push trial04tq7y.jfrog.io/docker-trial/test-image:1.0
+
       - name: Run JFrog CLI
         run: |
           # Ping the server
