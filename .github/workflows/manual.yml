@@ -44,5 +44,6 @@ jobs:
         run: |
           # Add build status
           export JFROG_BUILD_STATUS=${{ steps.status.outputs.status }}
+          env | grep JFROG
           # Publish build info
           jf rt bp test-build1 43
