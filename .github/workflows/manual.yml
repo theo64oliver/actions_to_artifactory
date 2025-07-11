@@ -43,4 +43,4 @@ jobs:
           # Add build status
           export JFROG_BUILD_STATUS=PASS
           # Publish build info
-          jf rt bp test-build1 43 hello im trying
+          jf rt bp test-build1 43
