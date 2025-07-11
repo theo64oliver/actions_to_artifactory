@@ -50,6 +50,7 @@ jobs:
         run: |
           # Add build status
           echo "JFROG_BUILD_STATUS=FAIL" >> $GITHUB_ENV
+          echo ${{ github.head_ref }}.${{ github.sha }}
           env | grep JFROG
           # Publish build info
           jf rt bp test-build1 43
