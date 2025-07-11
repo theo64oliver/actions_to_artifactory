@@ -5,6 +5,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+     JFROG_BUILD_STATUS: PASS
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,10 +42,14 @@ jobs:
           jf rt upload "libA.a" test1-output
           # Add dependencies
           jf rt bad test-build1 43 "libA.a"
+      - name: Failure check
+        run: |
+          echo "JFROG_BUILD_STATUS=FAIL" >> $GITHUB_ENV
+        if: failure()
       - name: Publish build status
         run: |
           # Add build status
-          export JFROG_BUILD_STATUS=PASS
+          echo "JFROG_BUILD_STATUS=FAIL" >> $GITHUB_ENV
           env | grep JFROG
           # Publish build info
           jf rt bp test-build1 43
