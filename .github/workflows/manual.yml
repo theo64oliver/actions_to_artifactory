@@ -38,7 +38,7 @@ jobs:
           # Collect VCS details from git and add them to the build
           jf rt bag
           # Upload files
-          jf rt upload "test1/*" test1-output --build-name=test-build1 --build-number=43
+          jf rt upload "test1/*" test1-output/${{ github.sha }} --build-name=test-build1 --build-number=43
           jf rt upload "libA.a" test1-output
           # Add dependencies
           jf rt bad test-build1 43 "libA.a"
@@ -50,7 +50,7 @@ jobs:
         run: |
           # Add build status
           echo "JFROG_BUILD_STATUS=FAIL" >> $GITHUB_ENV
-          echo ${{ github.head_ref }}.${{ github.sha }}
+          echo ${{ github.sha }}
           env | grep JFROG
           # Publish build info
           jf rt bp test-build1 43
