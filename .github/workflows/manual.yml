@@ -40,7 +40,9 @@ jobs:
           jf rt upload "libA.a" test1-output
           # Add dependencies
           jf rt bad test-build1 43 "libA.a"
+      - name: Publish build status
+        run: |
           # Add build status
-          echo "JFROG_BUILD_STATUS=PASS" >> $GITHUB_ENV
+          export JFROG_BUILD_STATUS=${{ steps.status.outputs.status }}
           # Publish build info
           jf rt bp test-build1 43
