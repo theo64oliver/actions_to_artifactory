@@ -53,3 +53,4 @@ jobs:
           env | grep JFROG
           # Publish build info
           jf rt bp test-build1 43
+        if: always()
