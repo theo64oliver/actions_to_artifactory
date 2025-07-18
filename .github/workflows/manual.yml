@@ -29,6 +29,11 @@ jobs:
           docker build -t trial04tq7y.jfrog.io/docker-trial/test-image:1.0 .
           docker push trial04tq7y.jfrog.io/docker-trial/test-image:1.0
 
+      - name: Debug commit date
+        run: |
+          echo "COMMIT_DATE=$(git show -s --format=%cd --date=format:'%Y-%m-%d')" >> $GITHUB_ENV
+          echo "Commit date is ${{ env.commit_date }}"
+
       - name: Run JFrog CLI
         run: |
           # Ping the server
@@ -38,7 +43,6 @@ jobs:
           # Collect VCS details from git and add them to the build
           jf rt bag
           # Upload files
-          echo "COMMIT_DATE=$(git show -s --format=%cd --date=format:'%Y-%m-%d')" >> $GITHUB_ENV
           jf rt upload "test1/file1.txt" test1-output/executable/ARM/${{ github.sha }}/resTest.inst --build-name=test-build2 --build-number=1 --module=resTest --target-props "commit_hash=${{ github.sha }};commit_log=${{ github.event.head_commit.message }};commit_date=${{ env.COMMIT_DATE }}"
           # Add dependencies
       - name: Failure check
