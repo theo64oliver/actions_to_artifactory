@@ -32,11 +32,6 @@ jobs:
           docker build -t trial04tq7y.jfrog.io/docker-trial/test-image:1.0 .
           docker push trial04tq7y.jfrog.io/docker-trial/test-image:1.0
 
-      - name: Debug commit date
-        run: |
-          echo "COMMIT_DATE=$(git show -s --format=%cd --date=format:'%Y-%m-%d')" >> $GITHUB_ENV
-          echo "Commit date is ${{ env.commit_date }}"
-
       - name: Run JFrog CLI
         run: |
           # Ping the server
