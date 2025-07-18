@@ -39,7 +39,7 @@ jobs:
           jf rt bag
           # Upload files
           export COMMIT_TIME=$(git show -s --format=%ci dd28288f)
-          jf rt upload "test1/file1.txt" test1-output/executable/ARM/${{ github.sha }}/resTest.inst --build-name=test-build2 --build-number=1 --module=resTest --target-props "commit_hash=${{ github.sha }};commit_log=${{ github.event.head_commit.message }};commit_date=${{ COMMIT_DATE }}"
+          jf rt upload "test1/file1.txt" test1-output/executable/ARM/${{ github.sha }}/resTest.inst --build-name=test-build2 --build-number=1 --module=resTest --target-props "commit_hash=${{ github.sha }};commit_log=${{ github.event.head_commit.message }};commit_date=$COMMIT_DATE"
           # Add dependencies
       - name: Failure check
         run: |
