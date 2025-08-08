@@ -5,58 +5,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-     JFROG_BUILD_STATUS: PASS
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # <== This is critical
+      - name: set env
+      run: |
+        echo "test=12" >> "$GITHUB_ENV"
 
-      - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v4
-        env:
-          # JFrog platform url (for example: https://acme.jfrog.io)
-          JF_URL: https://trial04tq7y.jfrog.io/
 
-          # JFrog Platform access token
-          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-
-          # Basic authentication credentials
-          # JF_USER: ${{ secrets.JF_USER }}
-          # JF_PASSWORD: ${{ secrets.JF_PASSWORD }}
-
-      - name: Publish docker image to registry
-        run: |
-          docker login -uadmin trial04tq7y.jfrog.io -p ${{secrets.DOCKER_TOKEN}}
-          docker build -t trial04tq7y.jfrog.io/docker-trial/test-image:1.0 .
-          docker push trial04tq7y.jfrog.io/docker-trial/test-image:1.0
-
-      - name: Get commit date
-        run: |
-          echo "COMMIT_DATE=$(git show -s --format=%cd --date=format:'%Y-%m-%d')" >> $GITHUB_ENV
-
-      - name: Run JFrog CLI
-        run: |
-          # Ping the server
-          jf rt ping
-          # Collect environment variables for the build
-          jf rt bce
-          # Collect VCS details from git and add them to the build
-          jf rt bag
-          # Upload files
-          jf rt upload "test1/file1.txt" test1-output/executable/ARM/${{ github.sha }}/resTest.inst --build-name=test-build2 --build-number=1 --module=resTest --target-props "commit_hash=${{ github.sha }};commit_log=${{ github.event.head_commit.message }};commit_date=${{ env.COMMIT_DATE }}"
-          # Add dependencies
-      - name: Failure check
-        run: |
-          echo "JFROG_BUILD_STATUS=FAIL" >> $GITHUB_ENV
-        if: failure()
-      - name: Publish build status
-        run: |
-          # Add build status
-          echo "JFROG_BUILD_STATUS=FAIL" >> $GITHUB_ENV
-          echo ${{ github.sha }}
-          env | grep JFROG
-          # Publish build info
-          jf rt bp test-build2 1
-        if: always()
+  pub:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: echo test
+        run: echo ${{ env.test }}
