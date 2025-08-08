@@ -9,8 +9,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: set env
-      run: |
-        echo "test=12" >> "$GITHUB_ENV"
+        run: |
+          echo "test=12" >> "$GITHUB_ENV"
 
 
   pub:
